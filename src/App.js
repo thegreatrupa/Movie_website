@@ -6,20 +6,20 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Screen1 from "./Screens/Screen1";
-import Screen2 from "./Screens/Screen2";
+import Home from "./Home/Home";
+import Details from "./Screens/Details";
 import React from "react";
 
 function App() {
   return (
     <>
-    <Router>
-      <Routes>
-        <Route exact path="/" Component={Screen1} />
-        <Route exact path="/screen2" Component={Screen2}/>
-        <React.Fragment to="/"/>
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route exact path="/" Component={Home} />
+          <Route exact path="/screen2" Component={Details} />
+          <React.Fragment to="/" />
+        </Routes>
+      </Router>
     </>
   );
 }

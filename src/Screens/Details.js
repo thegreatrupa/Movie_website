@@ -2,13 +2,13 @@ import React, { useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
-import "./Screen2.css";
+import "./Details.css";
 
 import Image2 from "../Avatar/Image1.jpg";
-import FormModal from "../Modal/FormModal";
+import BookingModal from "../Modal/BookingModal";
 import Info from "../Avatar/info.png";
 
-const Screen2 = () => {
+const Details = () => {
   const [more, setmore] = useState(false);
   const [modal, setmodal] = useState(false);
   const location = useLocation();
@@ -97,7 +97,7 @@ const Screen2 = () => {
         </div>
       </div>
       {modal ? (
-        <FormModal
+        <BookingModal
           closeModal={closeModal}
           name={data ? data[0][data[1]].show.name : null}
           image={data ? data[0][data[1]].show.image.medium : ""}
@@ -107,4 +107,4 @@ const Screen2 = () => {
   );
 };
 
-export default Screen2;
+export default Details;

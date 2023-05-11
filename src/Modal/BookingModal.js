@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import "./FormModal.css";
+import "./BookingModal.css";
 
-const FormModal = (props) => {
+const BookingModal = (props) => {
   const [name, setname] = useState("");
   const [phone, setphone] = useState("");
   const [email, setemail] = useState();
@@ -72,4 +72,4 @@ const FormModal = (props) => {
   );
 };
 
-export default FormModal;
+export default BookingModal;
