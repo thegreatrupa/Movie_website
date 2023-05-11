@@ -5,6 +5,8 @@ import axios from "axios";
 
 import "./Screen1.css";
 
+import Screen2 from "./Screen2.js";
+
 const Screen1 = () => {
   const [data, setdata] = useState();
 
@@ -18,7 +20,7 @@ const Screen1 = () => {
     challengeDetailsAPI();
   }, []);
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <div className="w-100 d-flex flex-column">

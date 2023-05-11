@@ -16,7 +16,7 @@ const FormModal = (props) => {
   return (
     <div className="modal">
       <div className="form mt-3">
-        <div className="modal-head text-center font-weight-bold">Title</div>
+        <div className="modal-head text-center font-weight-bold">{props.name}</div>
         <hr />
         <div className="modal-body">
           <div className="w-100 d-flex flex-column ml-3">
