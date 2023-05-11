@@ -1,0 +1,40 @@
+.title {
+  background-color: cadetblue;
+}
+
+.contents {
+  width: 100%;
+  /* background-color: lightblue; */
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  min-width: 220px;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+}
+
+.genre {
+  font-size: x-small;
+}
+
+.rating {
+  float: right;
+}
+
+.summary-btn
+{
+    outline: transparent;
+    background: transparent;
+    background-color: cornflowerblue;
+    border-radius: 20px;
+    float: none;
+    cursor: pointer;
+}
