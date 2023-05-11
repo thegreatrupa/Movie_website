@@ -1,16 +1,26 @@
+.screen1 {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.screen1::-webkit-scrollbar {
+  display: none;
+}
+
 .title {
-  background-color: cadetblue;
+  color: white;
+  font-family: serif;
+  font-size: 50px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .contents {
   width: 100%;
-  /* background-color: lightblue; */
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .card {
@@ -18,7 +28,7 @@
   justify-content: space-between;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 20px;
+  border-radius: 5px;
 }
 
 .genre {
@@ -29,12 +39,10 @@
   float: right;
 }
 
-.summary-btn
-{
-    outline: transparent;
-    background: transparent;
-    background-color: cornflowerblue;
-    border-radius: 20px;
-    float: none;
-    cursor: pointer;
+.image {
+  cursor: pointer;
+  max-height: 30vh;
+  min-width: 250px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }

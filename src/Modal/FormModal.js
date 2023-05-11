@@ -9,15 +9,21 @@ const FormModal = (props) => {
   const [unfilled, setunfilled] = useState(false);
 
   const submitHandler = () => {
-    if (name !== "" && phone !== "") props.closeModal(); 
+    if (name !== "" && phone !== "") props.closeModal();
     setunfilled(true);
   };
 
   return (
     <div className="modal">
       <div className="form mt-3">
-        <div className="modal-head text-center font-weight-bold">{props.name}</div>
-        <hr />
+        <div className="modal-head text-center font-weight-bold">
+          <img
+            className="modal-img"
+            src={props.image}
+            width={296}
+            height={250}
+          ></img>
+        </div>
         <div className="modal-body">
           <div className="w-100 d-flex flex-column ml-3">
             <span className="required mb-1">Name</span>

@@ -1,25 +1,18 @@
 import React, { useState, useLayoutEffect } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 import "./Screen2.css";
 
 import Image2 from "../Avatar/Image1.jpg";
 import FormModal from "../Modal/FormModal";
+import Info from "../Avatar/info.png";
 
 const Screen2 = () => {
-  const [name,setname] = useState("");
+  const [more, setmore] = useState(false);
   const [modal, setmodal] = useState(false);
-  const [data, setdata] = useState();
-
-  const challengeDetailsAPI = async () => {
-    const URL = "https://api.tvmaze.com/search/shows?q=all";
-    const response = await axios.get(URL);
-    setdata(response.data);
-  };
-
-  useLayoutEffect(() => {
-    challengeDetailsAPI();
-  }, []);
+  const location = useLocation();
+  const data = location.state;
 
   console.log(data);
 
@@ -29,179 +22,87 @@ const Screen2 = () => {
 
   return (
     <div className="screen2 w-100 d-flex flex-column">
-      <div className="movie d-flex flex-column mt-3">
-
-        <div>
-          <img className="image" src={data ? data[0].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[0].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[0].show.summary : "Summary"}
-            </h5>
+      <div className="movie d-flex flex-column mt-3 p-2">
+        <div className="d-flex flex-column">
+          <div className="justify-content-center align-items-center">
+            <img
+              className="image2"
+              src={data ? data[0][data[1]].show.image.medium : Image2}
+              alt="poster"
+            ></img>
           </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[0].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[1].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[1].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[1].show.summary : "Summary"}
+          <div className="details mt-3">
+            <h5 className="summary font-weight-light">
+              {data ? data[0][data[1]].show.summary : "Summary"}
             </h5>
+            <div className="streaming">
+              {" "}
+              Streaming on{" "}
+              <b>
+                {data ? data[0][data[1]].show.schedule.days[0] : "..."}{" "}
+                {data ? data[0][data[1]].show.schedule.time : null}{" "}
+              </b>
+            </div>
+            <div>
+              <button
+                className="info-btn p-1 text-center mt-2 mr-2"
+                onClick={() => {
+                  setmore(!more);
+                }}
+              >
+                <img
+                  className="mr-1"
+                  src={Info}
+                  alt=""
+                  height={18}
+                  width={18}
+                />{" "}
+                {more ? "Less Info" : "More Info"}
+              </button>
+            </div>
+            {more ? (
+              <div className="d-flex flex-column">
+                <span className="mt-3 more-text">
+                  Language : {data ? data[0][data[1]].show.language : null}{" "}
+                </span>
+                <span className="mt-3 more-text">
+                  Rating : {data ? data[0][data[1]].show.rating.average : null}{" "}
+                </span>
+                <span className="mt-3 more-text">
+                  Type : {data ? data[0][data[1]].show.type : null}{" "}
+                </span>
+                <span className="mt-3 more-text">
+                  Premiered : {data ? data[0][data[1]].show.premiered : null}{" "}
+                </span>
+                <span className="mt-3 more-text">
+                  URL :{" "}
+                  <a
+                    href={data ? data[0][data[1]].show.url : null}
+                    target="_blank"
+                  >
+                    {data ? data[0][data[1]].show.url : "url"}
+                  </a>
+                </span>
+              </div>
+            ) : null}
+            <button
+              className="info-btn p-1 text-center mt-2"
+              onClick={() => {
+                setmodal(true);
+              }}
+            >
+              Book Ticket
+            </button>
           </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[1].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
         </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[2].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[2].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[2].show.summary : "Summary"}
-            </h5>
-          </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[2].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[3].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[3].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[3].show.summary : "Summary"}
-            </h5>
-          </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[3].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[8].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[8].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[8].show.summary : "Summary"}
-            </h5>
-          </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[8].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[5].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[5].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[5].show.summary : "Summary"}
-            </h5>
-          </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[5].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[6].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[6].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[6].show.summary : "Summary"}
-            </h5>
-          </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[6].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-        <div className="mt-2">
-          <img className="image" src={data ? data[7].show.image.medium : Image2} alt="poster"></img>
-          <div className="details p-1">
-            <h2 className="movie-name font-weight-bold  m-1 ml-lg-2">
-            {data ? data[7].show.name : "Movie Name"}
-            </h2>
-            <h5 className="summary m-1 ml-lg-2 font-weight-light">
-            {data ? data[7].show.summary : "Summary"}
-            </h5>
-          </div>
-          <button
-            className="btn p-1 text-center mt-2"
-            onClick={() => {
-              setmodal(true);
-              setname(data ? data[7].show.name : "Movie Name");
-            }}
-          >
-            Book Ticket
-          </button>
-        </div>
-
-
       </div>
-      {modal ? <FormModal closeModal={closeModal} name={name} /> : null}
+      {modal ? (
+        <FormModal
+          closeModal={closeModal}
+          name={data ? data[0][data[1]].show.name : null}
+          image={data ? data[0][data[1]].show.image.medium : ""}
+        />
+      ) : null}
     </div>
   );
 };
