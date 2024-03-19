@@ -1,32 +1,34 @@
 import React, { useState } from "react";
+import account_image from "../Avatar/account.png";
 
 import "./BookingModal.css";
 
 const BookingModal = (props) => {
   const [name, setname] = useState("");
   const [phone, setphone] = useState("");
-  const [email, setemail] = useState();
+  const [email, setemail] = useState("");
   const [unfilled, setunfilled] = useState(false);
 
   const submitHandler = () => {
-    if (name !== "" && phone !== "") props.closeModal();
-    setunfilled(true);
+    if (name === "" && phone === "") setunfilled(true);
+    else props.closeModal();
   };
 
   return (
     <div className="modal">
-      <div className="form mt-3">
+      <div className="form mt-5 ">
         <div className="modal-head text-center font-weight-bold">
           <img
             className="modal-img"
-            src={props.image}
+            alt="profile"
+            src={props.image ? props.image : account_image}
             width={296}
             height={250}
           ></img>
         </div>
         <div className="modal-body">
           <div className="w-100 d-flex flex-column ml-3">
-            <span className="required mb-1">Name</span>
+            <span className="required mb-1 text-dark">Name</span>
             <input
               className="input-field "
               type="text"
@@ -37,7 +39,7 @@ const BookingModal = (props) => {
             ></input>
           </div>
           <div className="w-100 d-flex flex-column ml-3 mt-2">
-            <span className="required mb-1">Contact Number</span>
+            <span className="required mb-1 text-dark">Contact Number</span>
             <input
               className="input-field "
               type="text"
@@ -48,7 +50,7 @@ const BookingModal = (props) => {
             ></input>
           </div>
           <div className="w-100 d-flex flex-column ml-3 mt-2">
-            <span className="mb-1">Email Id</span>
+            <span className="mb-1 text-dark">Email Id</span>
             <input
               className="input-field "
               type="email"

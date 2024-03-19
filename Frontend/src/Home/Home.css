@@ -1,0 +1,84 @@
+.body {
+  overflow-y: scroll;
+  flex-wrap: nowrap;
+}
+
+.body::-webkit-scrollbar {
+  display: none;
+}
+
+.main-text {
+  background-image: linear-gradient(to right, white, transparent);
+}
+
+.title {
+  color: rgb(3, 35, 48);
+  text-shadow: 1px 1px;
+  font-family: serif;
+  font-size: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contents {
+  width: 100%;
+  justify-content: left;
+  overflow-x: scroll;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.contents::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  min-width: 220px;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+}
+
+.image {
+  cursor: pointer;
+  height: 15rem;
+  border-radius: 5px;
+  border: transparent;
+}
+
+.scroll-arrow {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.03;
+  border: transparent;
+}
+
+.scroll-arrow:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.scroll-arrow2 {
+  position: -webkit-sticky;
+  position: sticky;
+  right: 0;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.1;
+  border: transparent;
+}
+
+.scroll-arrow2:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.movie-type {
+  font-size: x-large;
+  font-family: sans-serif;
+}

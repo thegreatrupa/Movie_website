@@ -8,7 +8,7 @@ body {
 }
 
 .screen2::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .movie {
@@ -18,11 +18,12 @@ body {
 }
 
 .image2 {
-  width: 50%;
+  width: 40%;
   min-width: 250px;
   max-height: 60vh;
   border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(311, 311, 311, 0.2), 0 6px 20px 0 rgba(311, 311, 311, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(311, 311, 311, 0.2),
+    0 6px 20px 0 rgba(311, 311, 311, 0.19);
 }
 
 .movie-name {
@@ -44,14 +45,30 @@ body {
 }
 
 .info-btn {
+  width: 8rem; 
+  border-radius: 5px;
+  background-color: lightgray;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn {
+  width: 8rem; 
+  border-radius: 5px;
+  background-color: lightgray;
+  cursor: pointer;
+  outline: transparent;
+}
+
+.btn.active {
   width: 8rem;
   border: none;
   border-radius: 5px;
-  background-color: lightgrey;
+  background-color: rgb(34, 139, 173);
   cursor: pointer;
+  outline: transparent;
 }
 
-.more-text
-{
-    color: white;
+.more-text {
+  color: white;
 }

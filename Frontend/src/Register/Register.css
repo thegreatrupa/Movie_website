@@ -1,0 +1,54 @@
+.whole {
+  height: 100vh;
+  display: flex;
+}
+
+.profile {
+  background-color: rgba(55, 65, 81, 1);
+  width: 300px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.profile-title {
+  font-size: large;
+  font-family: sans-serif;
+}
+
+.side-text {
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.profile-details {
+  width: 250px;
+  gap: 10px;
+}
+
+.register-input {
+  outline: transparent;
+  border: 0.5px solid rgb(115, 114, 114);
+  background-color: rgb(55, 65, 81);
+  border-radius: 5px;
+  padding: 5px;
+  font-size: small;
+  color: white;
+}
+
+span {
+  color: white;
+  font-size: small;
+}
+
+.submit-button {
+  outline: none;
+  border: none;
+  background-color: rgb(59, 129, 246);
+  border-radius: 5px;
+}
+
+.submit-button:hover {
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(21, 101, 240);
+}
