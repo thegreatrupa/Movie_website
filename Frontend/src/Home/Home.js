@@ -8,7 +8,7 @@ import { set_username, set_watchlist, set_likes, select_user_email, select_user_
 import Profile from "../Profile/Profile";
 import "./Home.css";
 
-import Left from "../Avatar/left.png";
+import Left from "../Avatar/left-icon.png";
 import Right from "../Avatar/right.png";
 import account from "../Avatar/account.png";
 import user_image from "../Avatar/user_image.png"
@@ -98,10 +98,10 @@ const Home = (props) => {
 
   const PopularMovies = (props) => {
     return (
-      <div className="card d-flex flex-column justify-content-center align-items center">
+      <div className="card d-flex ">
         <Link to="/screen2" state={[data, props.i]}>
           <img
-            className="image w-100"
+            className="image"
             src={data ? baseurl + data.results[props.i].poster_path : Image1}
             alt="movie"
           ></img>
@@ -169,7 +169,7 @@ const Home = (props) => {
       <div className="main-text text-left">
         <span className="title ml-5">Movies</span>
         <div className="float-right text-light">
-        <Link to={logged_in ? "/profile" : "/Register"}>
+        <Link to={!logged_in ? "/profile" : "/Register"}>
           <img
             src={!logged_in ? account : user_image}
             className="bg-light mt-3 rounded-circle mr-3 cursor-pointer"
@@ -183,7 +183,7 @@ const Home = (props) => {
       <div className="mb-1 ml-2 mt-3">
         <span className="movie-type text-white">Popular Movies</span>
       </div>
-      <div className="contents d-flex flex-row mb-2" id="contents">
+      <div className="contents d-flex flex-col mb-2" id="contents">
         <button
           className="scroll-arrow"
           onClick={() => {
@@ -193,9 +193,8 @@ const Home = (props) => {
             });
           }}
         >
-          <img src={Left} className="" alt="left" width={30} height={30}></img>
-        </button>
-        {/* {data.map(())} */}
+          <img src={Left} className="left-arrow" alt="left" ></img>
+        </button> 
         {<PopularMovies i={0} />}
         {<PopularMovies i={1} />}
         {<PopularMovies i={2} />}
@@ -226,11 +225,9 @@ const Home = (props) => {
           }}
         >
           <img
-            src={Right}
-            className=""
-            alt="right"
-            width={30}
-            height={30}
+            src={Left}
+            className="right-arrow"
+            alt="right" 
           ></img>
         </button>
       </div>
@@ -248,7 +245,7 @@ const Home = (props) => {
             });
           }}
         >
-          <img src={Left} className="" alt="left" width={30} height={30}></img>
+          <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
         {<TopRatedMovies i={0} />}
         {<TopRatedMovies i={1} />}
@@ -280,11 +277,9 @@ const Home = (props) => {
           }}
         >
           <img
-            src={Right}
-            className=""
-            alt="right"
-            width={30}
-            height={30}
+            src={Left}
+            className="right-arrow"
+            alt="right" 
           ></img>
         </button>
       </div>
@@ -302,7 +297,7 @@ const Home = (props) => {
             });
           }}
         >
-          <img src={Left} className="" alt="left" width={30} height={30}></img>
+          <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
         {<NowPlayingMovies i={0} />}
         {<NowPlayingMovies i={1} />}
@@ -334,11 +329,9 @@ const Home = (props) => {
           }}
         >
           <img
-            src={Right}
-            className=""
-            alt="right"
-            width={30}
-            height={30}
+            src={Left}
+            className="right-arrow"
+            alt="right" 
           ></img>
         </button>
       </div>
@@ -356,7 +349,7 @@ const Home = (props) => {
             });
           }}
         >
-          <img src={Left} className="" alt="left" width={30} height={30}></img>
+          <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
         {<UpcomingMovies i={0} />}
         {<UpcomingMovies i={1} />}
@@ -388,11 +381,9 @@ const Home = (props) => {
           }}
         >
           <img
-            src={Right}
-            className=""
-            alt="right"
-            width={30}
-            height={30}
+            src={Left}
+            className="right-arrow"
+            alt="right" 
           ></img>
         </button>
       </div>

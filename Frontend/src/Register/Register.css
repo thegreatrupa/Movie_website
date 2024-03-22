@@ -3,14 +3,14 @@
   display: flex;
 }
 
-.profile {
+.register {
   background-color: rgba(55, 65, 81, 1);
-  width: 300px;
+  max-width: 350px;
   margin: auto;
   border-radius: 5px;
 }
 
-.profile-title {
+.register-title {
   font-size: large;
   font-family: sans-serif;
 }
@@ -20,9 +20,10 @@
   font-size: 11px;
 }
 
-.profile-details {
+.register-details {
   width: 250px;
   gap: 10px;
+  margin: auto;
 }
 
 .register-input {
