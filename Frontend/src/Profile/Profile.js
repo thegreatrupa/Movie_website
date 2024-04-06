@@ -7,11 +7,12 @@ import { set_watchlist, reset_watchlist, set_likes, reset_likes, select_user_ema
 import Image from "../Avatar/user_image.png";
 
 const Profile = () => {
-  const [left, setleft] = useState(true);
-  const [right, setright] = useState(false);
+  const [left, setleft] = useState(true); 
   const user_email_id = useSelector(select_user_email);
   const user_watchlist = useSelector(select_user_watchlist);
   const user_likes = useSelector(select_user_likes);
+  const [empty_watchlist, setempty_watchlist] = useState(true);
+  const [empty_likes, setempty_likes] = useState(true);
 
 
   const List = () => {
@@ -41,12 +42,19 @@ const Profile = () => {
             </div>
           </div>
           <div className="lower mt-3">
-            {<List/>}
-            {<List/>}
-            {<List/>}
-            {<List/>}
-            {<List/>}
-            {<List/>}
+            {left ? (
+              <div>
+                {
+                  empty_watchlist ? <div className="empty-text">No movie in watchlist</div> : <div>{<List/>}</div>
+                }
+              </div>
+            ) : (
+              <div>
+                {
+                  empty_likes ? <div className="empty-text">Like movies to add to your list</div> : <div>{<List/>}</div>
+                }
+              </div>
+            ) } 
           </div>
         </div>
       </div>
