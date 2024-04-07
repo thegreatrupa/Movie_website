@@ -11,15 +11,19 @@ import "./Home.css";
 import Left from "../Avatar/left-icon.png";
 import Right from "../Avatar/right.png";
 import account from "../Avatar/account.png";
-import user_image from "../Avatar/user_image.png"
+import user_image from "../Avatar/user_image.png"; 
 
 const Home = (props) => {
-  const [data, setdata] = useState();
+  const [popular, setpopular] = useState();
   const [topRated, settopRated] = useState();
   const [upcoming, setupcoming] = useState();
   const [nowPlaying, setnowPlaying] = useState();
   const [logged_in, setlogged_in] = useState(false);
-  // const [userData, setuserData] = useState({});
+
+  const popularList = [];
+  const topRatedList = [];
+  const nowPlayingList = [];
+  const upcomingList = [];
   
   const dispatch = useDispatch();
   const user_email_id = useSelector(select_user_email);
@@ -32,7 +36,6 @@ const Home = (props) => {
   useEffect(() => {
     if(user_email_id !== ""){
       setlogged_in(true);
-      // console.log("user id is : " + user_email_id);
       const formData = {
         "email" : user_email_id
       }
@@ -56,29 +59,27 @@ const Home = (props) => {
   const popularMoviesAPI = async () => {
     const URL = frontUrl + "popular" + backUrl;
     const response = await axios.get(URL);
-    setdata(response.data);
-    // console.log(response.data);
+    setpopular(response.data.results); 
   };
 
   const topRatedMoviesAPI = async () => {
     const URL = frontUrl + "top_rated" + backUrl; 
     const response = await axios.get(URL);
-    settopRated(response.data);
+    settopRated(response.data.results);
   };
 
   const nowPlayingAPI = async () => {
     const URL = frontUrl + "now_playing" + backUrl; 
     const response = await axios.get(URL);
-    setnowPlaying(response.data);
+    setnowPlaying(response.data.results);
   };
 
   const upcomingAPI = async () => {
     const URL = frontUrl + "/upcoming" + backUrl; 
     const response = await axios.get(URL);
-    setupcoming(response.data);
+    setupcoming(response.data.results);
   };
-
-  //console.log(nowPlaying);
+ 
 
   useLayoutEffect(() => {
     popularMoviesAPI();
@@ -87,87 +88,68 @@ const Home = (props) => {
     upcomingAPI();
   }, []); 
 
-  
-  // const Demo = () => {
-  //   return (
-  //     <Link to="/Register">
-  //       <span>Register</span>
-  //     </Link>
-  //   );
-  // };
 
-  const PopularMovies = (props) => {
+
+  const Movies = (props) => { 
     return (
       <div className="card d-flex ">
-        <Link to="/screen2" state={[data, props.i]}>
+        <Link to="/screen2" state={props.data ? props.data : ""}>
           <img
             className="image"
-            src={data ? baseurl + data.results[props.i].poster_path : Image1}
+            src={props.data ? baseurl + props.data.poster_path : Image1}
             alt="movie"
           ></img>
         </Link>
       </div>
     );
   };
+  
 
-  const TopRatedMovies = (props) => {
-    return (
-      <div className="card d-flex flex-column justify-content-center align-items center">
-        <Link to="/screen2" state={[topRated, props.i]}>
-          <img
-            className="image w-100"
-            src={
-              topRated
-                ? baseurl + topRated.results[props.i].poster_path
-                : Image1
-            }
-            alt="movie"
-          ></img>
-        </Link>
-      </div>
-    );
+  const popularMovies = (props) => { 
+    popular?.forEach((data, index) => {
+      popularList.push(
+        <Movies data={data}/>
+      )
+    })
   };
+  popularMovies();
 
-  const NowPlayingMovies = (props) => {
-    return (
-      <div className="card d-flex flex-column justify-content-center align-items center">
-        <Link to="/screen2" state={[nowPlaying, props.i]}>
-          <img
-            className="image w-100"
-            src={
-              nowPlaying
-                ? baseurl + nowPlaying.results[props.i].poster_path
-                : Image1
-            }
-            alt="movie"
-          ></img>
-        </Link>
-      </div>
-    );
+  const topRatedMovies = (props) => { 
+    topRated?.forEach((data, index) => {
+      topRatedList.push(
+        <Movies data={data}/>
+      )
+    })
   };
+  topRatedMovies();
 
-  const UpcomingMovies = (props) => {
-    return (
-      <div className="card d-flex flex-column justify-content-center align-items center">
-        <Link to="/screen2" state={[upcoming, props.i]}>
-          <img
-            className="image w-100"
-            src={
-              upcoming
-                ? baseurl + upcoming.results[props.i].poster_path
-                : Image1
-            }
-            alt="movie"
-          ></img>
-        </Link>
-      </div>
-    );
+  const nowPlayingMovies = (props) => { 
+    nowPlaying?.forEach((data, index) => {
+      nowPlayingList.push(
+        <Movies data={data}/>
+      )
+    })
   };
+  nowPlayingMovies();
+
+  const upcomingMovies = (props) => { 
+    upcoming?.forEach((data, index) => {
+      upcomingList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  upcomingMovies();
 
   return (
     <div className="screen1 w-100 d-flex flex-column mt-3">
       <div className="main-text text-left">
-        <span className="title ml-5">Movies</span>
+        <span className="title t1 ml-5">M</span>
+        <span className="title t2">O</span>
+        <span className="title t3">V</span>
+        <span className="title t4">I</span>
+        <span className="title t5">E</span>
+        <span className="title t6">S</span>
         <div className="float-right text-light">
         <Link to={!logged_in ? "/profile" : "/Register"}>
           <img
@@ -194,27 +176,8 @@ const Home = (props) => {
           }}
         >
           <img src={Left} className="left-arrow" alt="left" ></img>
-        </button> 
-        {<PopularMovies i={0} />}
-        {<PopularMovies i={1} />}
-        {<PopularMovies i={2} />}
-        {<PopularMovies i={3} />}
-        {<PopularMovies i={4} />}
-        {<PopularMovies i={5} />}
-        {<PopularMovies i={6} />}
-        {<PopularMovies i={7} />}
-        {<PopularMovies i={8} />}
-        {<PopularMovies i={9} />}
-        {<PopularMovies i={10} />}
-        {<PopularMovies i={11} />}
-        {<PopularMovies i={12} />}
-        {<PopularMovies i={13} />}
-        {<PopularMovies i={14} />}
-        {<PopularMovies i={15} />}
-        {<PopularMovies i={16} />}
-        {<PopularMovies i={17} />}
-        {<PopularMovies i={18} />}
-        {<PopularMovies i={19} />}
+        </button>
+        {popularList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -247,26 +210,7 @@ const Home = (props) => {
         >
           <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
-        {<TopRatedMovies i={0} />}
-        {<TopRatedMovies i={1} />}
-        {<TopRatedMovies i={2} />}
-        {<TopRatedMovies i={3} />}
-        {<TopRatedMovies i={4} />}
-        {<TopRatedMovies i={5} />}
-        {<TopRatedMovies i={6} />}
-        {<TopRatedMovies i={7} />}
-        {<TopRatedMovies i={8} />}
-        {<TopRatedMovies i={9} />}
-        {<TopRatedMovies i={10} />}
-        {<TopRatedMovies i={11} />}
-        {<TopRatedMovies i={12} />}
-        {<TopRatedMovies i={13} />}
-        {<TopRatedMovies i={14} />}
-        {<TopRatedMovies i={15} />}
-        {<TopRatedMovies i={16} />}
-        {<TopRatedMovies i={17} />}
-        {<TopRatedMovies i={18} />}
-        {<TopRatedMovies i={19} />}
+        {topRatedList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -298,27 +242,8 @@ const Home = (props) => {
           }}
         >
           <img src={Left} className="left-arrow" alt="left"  ></img>
-        </button>
-        {<NowPlayingMovies i={0} />}
-        {<NowPlayingMovies i={1} />}
-        {<NowPlayingMovies i={2} />}
-        {<NowPlayingMovies i={3} />}
-        {<NowPlayingMovies i={4} />}
-        {<NowPlayingMovies i={5} />}
-        {<NowPlayingMovies i={6} />}
-        {<NowPlayingMovies i={7} />}
-        {<NowPlayingMovies i={8} />}
-        {<NowPlayingMovies i={9} />}
-        {<NowPlayingMovies i={10} />}
-        {<NowPlayingMovies i={11} />}
-        {<NowPlayingMovies i={12} />}
-        {<NowPlayingMovies i={13} />}
-        {<NowPlayingMovies i={14} />}
-        {<NowPlayingMovies i={15} />}
-        {<NowPlayingMovies i={16} />}
-        {<NowPlayingMovies i={17} />}
-        {<NowPlayingMovies i={18} />}
-        {<NowPlayingMovies i={19} />}
+        </button> 
+        {nowPlayingList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -351,26 +276,7 @@ const Home = (props) => {
         >
           <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
-        {<UpcomingMovies i={0} />}
-        {<UpcomingMovies i={1} />}
-        {<UpcomingMovies i={2} />}
-        {<UpcomingMovies i={3} />}
-        {<UpcomingMovies i={4} />}
-        {<UpcomingMovies i={5} />}
-        {<UpcomingMovies i={6} />}
-        {<UpcomingMovies i={7} />}
-        {<UpcomingMovies i={8} />}
-        {<UpcomingMovies i={9} />}
-        {<UpcomingMovies i={10} />}
-        {<UpcomingMovies i={11} />}
-        {<UpcomingMovies i={12} />}
-        {<UpcomingMovies i={13} />}
-        {<UpcomingMovies i={14} />}
-        {<UpcomingMovies i={15} />}
-        {<UpcomingMovies i={16} />}
-        {<UpcomingMovies i={17} />}
-        {<UpcomingMovies i={18} />}
-        {<UpcomingMovies i={19} />}
+        {upcomingList}
         <button
           className="scroll-arrow2"
           onClick={() => {

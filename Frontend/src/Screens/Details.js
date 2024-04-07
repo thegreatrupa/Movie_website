@@ -17,7 +17,8 @@ const Details = (props) => {
   // const [modal, setmodal] = useState(false);
   const location = useLocation();
   const data = location.state; 
-  const movie_name = data[0].results[data[1]].title; 
+  // console.log(data);
+  const movie_name = data.title; 
 
   const dispatch = useDispatch();
   const user_email_id = useSelector(select_user_email);
@@ -129,13 +130,13 @@ const Details = (props) => {
           <div className="justify-content-center align-items-center">
             <img
               className="image2"
-              src={data ? baseurl + data[0].results[data[1]].poster_path : Image1}
+              src={data ? baseurl + data.poster_path : Image1}
               alt="poster"
             ></img>
           </div>
           <div className="details mt-3">
             <h5 className="summary font-weight-light">
-              {data ? data[0].results[data[1]].overview : "Summary"}
+              {data ? data.overview : "Summary"}
             </h5>
             <div>
               <button
@@ -157,19 +158,19 @@ const Details = (props) => {
             {more ? (
               <div className="d-flex flex-column">
                 <span className="mt-3 more-text">
-                  Language : {data ? data[0].results[data[1]].original_language : null}{" "}
+                  Language : {data ? data.original_language : null}{" "}
                 </span>
                 <span className="mt-3 more-text">
-                  Rating : {data ? data[0].results[data[1]].vote_average : null}{" "}
+                  Rating : {data ? data.vote_average : null}{" "}
                 </span>
                 <span className="mt-3 more-text">
-                  Vote Count : {data ? data[0].results[data[1]].vote_count : null}{" "}
+                  Vote Count : {data ? data.vote_count : null}{" "}
                 </span>
                 <span className="mt-3 more-text">
-                  Popularuty : {data ? data[0].results[data[1]].popularity : null}{" "}
+                  Popularuty : {data ? data.popularity : null}{" "}
                 </span>
                 <span className="mt-3 more-text">
-                  Release Date : {data ? data[0].results[data[1]].release_date : null}{" "}
+                  Release Date : {data ? data.release_date : null}{" "}
                 </span>
                  
               </div>
