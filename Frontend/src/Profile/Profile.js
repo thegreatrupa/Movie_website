@@ -5,21 +5,51 @@ import { useDispatch, useSelector } from 'react-redux';
 import { set_watchlist, reset_watchlist, set_likes, reset_likes, select_user_email, select_user_watchlist, select_user_likes } from '../Redux/reducer'
 
 import Image from "../Avatar/user_image.png";
+import Profile_image from "../Avatar/profile.jpeg";
 
 const Profile = () => {
   const [left, setleft] = useState(true); 
   const user_email_id = useSelector(select_user_email);
   const user_watchlist = useSelector(select_user_watchlist);
   const user_likes = useSelector(select_user_likes);
-  const [empty_watchlist, setempty_watchlist] = useState(true);
-  const [empty_likes, setempty_likes] = useState(true);
+  const [empty_watchlist, setempty_watchlist] = useState(false);
+  const [empty_likes, setempty_likes] = useState(false);
 
 
-  const List = () => {
+  useEffect(() => {
+    if(user_watchlist.length == 0) setempty_watchlist(true);
+    if(user_likes.length == 0) setempty_likes(true);
+  }, [])
+
+  const watchlist = [];
+  const likelist = [];
+
+  const watchlist_movies = (props) => { 
+    user_watchlist?.forEach((data, index) => {
+      watchlist.push(
+        <List data={data}/>
+      )
+    })
+  };
+  watchlist_movies();
+
+
+  const likelist_movies = (props) => { 
+    user_likes?.forEach((data, index) => {
+      likelist.push(
+        <List data={data}/>
+      )
+    })
+  };
+  likelist_movies();
+
+
+
+  const List = (props) => {
     return(
-      <div className="movies d-flex flex-row">
-        <img className="movie-image ml-2 mr-3" src={Image}></img>
-        <div className="movie-name">movie-name is something out of line so it's not fully visi</div>
+      <div className="movies d-flex flex-row m-1">
+        <img className="movie-image ml-2 mr-3" src={props.Image}></img>
+        <div className="movie-name">movie-name is something out of line so it's not fully visible</div>
       </div>
     )
   }
@@ -28,9 +58,9 @@ const Profile = () => {
     <div className="p-2">
       <div className="profile w-100 bg-white mt-3 d-flex flex-column">
         <div className="image-div d-flex flex-col">
-          <div className="background1 "></div>
+          {/* <div className="background1 "></div> */}
           {/* <div className="background2 "></div> */}
-          <img className="profile-image" src={Image} alt="pic"></img>
+          <img className="profile-image" src={Profile_image} alt="pic"></img>
           
         </div>
         <span className="username mb-5">username</span>

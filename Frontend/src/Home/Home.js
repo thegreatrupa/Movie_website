@@ -11,7 +11,7 @@ import "./Home.css";
 import Left from "../Avatar/left-icon.png";
 import Right from "../Avatar/right.png";
 import account from "../Avatar/account.png";
-import user_image from "../Avatar/user_image.png"; 
+import user_image from "../Avatar/user_image.png";
 
 const Home = (props) => {
   const [popular, setpopular] = useState();
