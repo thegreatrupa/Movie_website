@@ -20,10 +20,30 @@ const Home = (props) => {
   const [nowPlaying, setnowPlaying] = useState();
   const [logged_in, setlogged_in] = useState(false);
 
-  const popularList = [];
-  const topRatedList = [];
-  const nowPlayingList = [];
-  const upcomingList = [];
+  const [sciFi, setsciFi] = useState([]);
+  const [drama, setdrama] = useState([]);
+  const [action, setaction] = useState([]);
+  const [supernatural, setsupernatural] = useState([]);
+  const [comedy, setcomedy] = useState([]);
+  const [adventure, stadventure] = useState([]);
+  const [shonen, setshonen ] = useState([]);
+  const [fantasy, setfantasy] = useState([]);
+  const [romance, setromance] = useState([]);
+
+  const sciFiList = [];
+  const dramaList = [];
+  const actionList = [];
+  const supernaturalList = [];
+  const comedyList = [];
+  const adventureList = [];
+  const shonenList = [];
+  const fantasyList = [];
+  const romanceList = [];
+
+  // const popularList = [];
+  // const topRatedList = [];
+  // const nowPlayingList = [];
+  // const upcomingList = [];
   
   const dispatch = useDispatch();
   const user_email_id = useSelector(select_user_email);
@@ -32,6 +52,7 @@ const Home = (props) => {
 
   const frontUrl = "https://api.themoviedb.org/3/movie/";
   const backUrl = "?api_key=712e77c35503480f5f2b8c563386db58";
+  const baseurl = "https://image.tmdb.org/t/p/original/";
 
   useEffect(() => {
     if(user_email_id !== ""){
@@ -54,39 +75,69 @@ const Home = (props) => {
 
   },[])
 
-  const baseurl = "https://image.tmdb.org/t/p/original/";
+  
+  useLayoutEffect(() => {
+    movies();
+  }, [])
 
-  const popularMoviesAPI = async () => {
-    const URL = frontUrl + "popular" + backUrl;
-    const response = await axios.get(URL);
-    setpopular(response.data.results); 
-  };
 
-  const topRatedMoviesAPI = async () => {
-    const URL = frontUrl + "top_rated" + backUrl; 
-    const response = await axios.get(URL);
-    settopRated(response.data.results);
-  };
+  // const popularMoviesAPI = async () => {
+  //   const URL = frontUrl + "popular" + backUrl;
+  //   const response = await axios.get(URL);
+  //   setpopular(response.data.results); 
+  // };
 
-  const nowPlayingAPI = async () => {
-    const URL = frontUrl + "now_playing" + backUrl; 
-    const response = await axios.get(URL);
-    setnowPlaying(response.data.results);
-  };
+  // const topRatedMoviesAPI = async () => {
+  //   const URL = frontUrl + "top_rated" + backUrl; 
+  //   const response = await axios.get(URL);
+  //   settopRated(response.data.results);
+  // };
 
-  const upcomingAPI = async () => {
-    const URL = frontUrl + "/upcoming" + backUrl; 
+  // const nowPlayingAPI = async () => {
+  //   const URL = frontUrl + "now_playing" + backUrl; 
+  //   const response = await axios.get(URL);
+  //   setnowPlaying(response.data.results);
+  // };
+
+  // const upcomingAPI = async () => {
+  //   const URL = frontUrl + "/upcoming" + backUrl; 
+  //   const response = await axios.get(URL);
+  //   setupcoming(response.data.results);
+  // };
+
+
+  const movies = async () => {
+    const URL = "http://localhost:3001/movies"; 
     const response = await axios.get(URL);
-    setupcoming(response.data.results);
+    <category data={response}/>
+    // category(response);
   };
+  movies();
+
+  const category = (props) => {
+    // console.log(props)
+    for(let i=0; i<props.data.length; i++){
+      for(let j=0; j<props.data[i].genre.length; j++){ 
+        if(props.data[i].genre[j]=="action") action.push(props.data[i]);
+        else if(props.data[i].genre[j]=="sci-fi") sciFi.push(props.data[i]);
+        else if(props.data[i].genre[j]=="adventure") adventure.push(props.data[i]);
+        else if(props.data[i].genre[j]=="comedy") comedy.push(props.data[i]);
+        else if(props.data[i].genre[j]=="drama") drama.push(props.data[i]);
+        else if(props.data[i].genre[j]=="supernatural") supernatural.push(props.data[i]);
+        else if(props.data[i].genre[j]=="shonen") shonen.push(props.data[i]);
+        else if(props.data[i].genre[j]=="romance") romance.push(props.data[i]);
+        else if(props.data[i].genre[j]=="fantasy") fantasy.push(props.data[i]);
+      }
+    }
+  }
  
 
-  useLayoutEffect(() => {
-    popularMoviesAPI();
-    topRatedMoviesAPI();
-    nowPlayingAPI();
-    upcomingAPI();
-  }, []); 
+  // useLayoutEffect(() => {
+  //   popularMoviesAPI();
+  //   topRatedMoviesAPI();
+  //   nowPlayingAPI();
+  //   upcomingAPI();
+  // }, []); 
 
 
 
@@ -96,50 +147,131 @@ const Home = (props) => {
         <Link to="/screen2" state={props.data ? props.data : ""}>
           <img
             className="image"
-            src={props.data ? baseurl + props.data.poster_path : Image1}
+            src={props.data ? props.data.poster : Image1}
             alt="movie"
           ></img>
         </Link>
       </div>
     );
   };
+
+  const sciFiMovies = (props) => {
+    sciFi?.forEach((data, index) => {
+      sciFiList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  sciFiMovies();
+
+  const dramaMovies = (props) => { 
+    drama?.forEach((data, index) => {
+      dramaList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  dramaMovies();
+
+  const actionMovies = (props) => { 
+    action?.forEach((data, index) => {
+      actionList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  actionMovies();
+
+  const supernaturalMovies = (props) => { 
+    supernatural?.forEach((data, index) => {
+      supernaturalList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  supernaturalMovies();
+
+  const comedyMovies = (props) => { 
+    comedy?.forEach((data, index) => {
+      comedyList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  comedyMovies();
+
+  const adventureMovies = (props) => { 
+    adventure?.forEach((data, index) => {
+      adventureList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  adventureMovies();
+
+  const shonenMovies = (props) => { 
+    shonen?.forEach((data, index) => {
+      shonenList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  shonenMovies();
+
+  const fantasyMovies = (props) => { 
+    fantasy?.forEach((data, index) => {
+      fantasyList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  fantasyMovies();
+
+  const romanceMovies = (props) => { 
+    romance?.forEach((data, index) => {
+      romanceList.push(
+        <Movies data={data}/>
+      )
+    })
+  };
+  romanceMovies();
   
 
-  const popularMovies = (props) => { 
-    popular?.forEach((data, index) => {
-      popularList.push(
-        <Movies data={data}/>
-      )
-    })
-  };
-  popularMovies();
+  // const popularMovies = (props) => { 
+  //   popular?.forEach((data, index) => {
+  //     popularList.push(
+  //       <Movies data={data}/>
+  //     )
+  //   })
+  // };
+  // popularMovies();
 
-  const topRatedMovies = (props) => { 
-    topRated?.forEach((data, index) => {
-      topRatedList.push(
-        <Movies data={data}/>
-      )
-    })
-  };
-  topRatedMovies();
+  // const topRatedMovies = (props) => { 
+  //   topRated?.forEach((data, index) => {
+  //     topRatedList.push(
+  //       <Movies data={data}/>
+  //     )
+  //   })
+  // };
+  // topRatedMovies();
 
-  const nowPlayingMovies = (props) => { 
-    nowPlaying?.forEach((data, index) => {
-      nowPlayingList.push(
-        <Movies data={data}/>
-      )
-    })
-  };
-  nowPlayingMovies();
+  // const nowPlayingMovies = (props) => { 
+  //   nowPlaying?.forEach((data, index) => {
+  //     nowPlayingList.push(
+  //       <Movies data={data}/>
+  //     )
+  //   })
+  // };
+  // nowPlayingMovies();
 
-  const upcomingMovies = (props) => { 
-    upcoming?.forEach((data, index) => {
-      upcomingList.push(
-        <Movies data={data}/>
-      )
-    })
-  };
-  upcomingMovies();
+  // const upcomingMovies = (props) => { 
+  //   upcoming?.forEach((data, index) => {
+  //     upcomingList.push(
+  //       <Movies data={data}/>
+  //     )
+  //   })
+  // };
+  // upcomingMovies();
 
   return (
     <div className="screen1 w-100 d-flex flex-column mt-3">
@@ -163,7 +295,7 @@ const Home = (props) => {
         </div>
       </div>
       <div className="mb-1 ml-2 mt-3">
-        <span className="movie-type text-white">Popular Movies</span>
+        <span className="movie-type text-white">Comedy Movies</span>
       </div>
       <div className="contents d-flex flex-col mb-2" id="contents">
         <button
@@ -177,7 +309,7 @@ const Home = (props) => {
         >
           <img src={Left} className="left-arrow" alt="left" ></img>
         </button>
-        {popularList}
+        {comedyList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -196,7 +328,7 @@ const Home = (props) => {
       </div>
 
       <div className="mb-1 ml-2 mt-3">
-        <span className="movie-type text-white">Top Rated Movies</span>
+        <span className="movie-type text-white">Drama Movies</span>
       </div>
       <div className="contents d-flex flex-row mb-2" id="contents2">
         <button
@@ -210,7 +342,7 @@ const Home = (props) => {
         >
           <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
-        {topRatedList}
+        {dramaList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -229,7 +361,7 @@ const Home = (props) => {
       </div>
 
       <div className="mb-1 ml-2 mt-3">
-        <span className="movie-type text-white">Now Playing Movies</span>
+        <span className="movie-type text-white">Action Movies</span>
       </div>
       <div className="contents d-flex flex-row mb-2" id="contents3">
         <button
@@ -243,7 +375,7 @@ const Home = (props) => {
         >
           <img src={Left} className="left-arrow" alt="left"  ></img>
         </button> 
-        {nowPlayingList}
+        {actionList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -262,7 +394,7 @@ const Home = (props) => {
       </div>
 
       <div className="mb-1 ml-2 mt-3">
-        <span className="movie-type text-white">Upcoming Movies</span>
+        <span className="movie-type text-white">Supernatural Movies</span>
       </div>
       <div className="contents d-flex flex-row mb-2" id="contents4">
         <button
@@ -276,7 +408,7 @@ const Home = (props) => {
         >
           <img src={Left} className="left-arrow" alt="left"  ></img>
         </button>
-        {upcomingList}
+        {supernaturalList}
         <button
           className="scroll-arrow2"
           onClick={() => {
@@ -293,6 +425,172 @@ const Home = (props) => {
           ></img>
         </button>
       </div>
+
+      <div className="mb-1 ml-2 mt-3">
+        <span className="movie-type text-white">Romance Movies</span>
+      </div>
+      <div className="contents d-flex flex-row mb-2" id="contents3">
+        <button
+          className="scroll-arrow"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: -window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img src={Left} className="left-arrow" alt="left"  ></img>
+        </button> 
+        {romanceList}
+        <button
+          className="scroll-arrow2"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img
+            src={Left}
+            className="right-arrow"
+            alt="right" 
+          ></img>
+        </button>
+      </div>
+
+      <div className="mb-1 ml-2 mt-3">
+        <span className="movie-type text-white">Adventure Movies</span>
+      </div>
+      <div className="contents d-flex flex-row mb-2" id="contents3">
+        <button
+          className="scroll-arrow"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: -window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img src={Left} className="left-arrow" alt="left"  ></img>
+        </button> 
+        {adventureList}
+        <button
+          className="scroll-arrow2"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img
+            src={Left}
+            className="right-arrow"
+            alt="right" 
+          ></img>
+        </button>
+      </div>
+
+      <div className="mb-1 ml-2 mt-3">
+        <span className="movie-type text-white">Fantasy Movies</span>
+      </div>
+      <div className="contents d-flex flex-row mb-2" id="contents3">
+        <button
+          className="scroll-arrow"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: -window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img src={Left} className="left-arrow" alt="left"  ></img>
+        </button> 
+        {fantasyList}
+        <button
+          className="scroll-arrow2"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img
+            src={Left}
+            className="right-arrow"
+            alt="right" 
+          ></img>
+        </button>
+      </div>
+
+      <div className="mb-1 ml-2 mt-3">
+        <span className="movie-type text-white">Shonen Movies</span>
+      </div>
+      <div className="contents d-flex flex-row mb-2" id="contents3">
+        <button
+          className="scroll-arrow"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: -window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img src={Left} className="left-arrow" alt="left"  ></img>
+        </button> 
+        {shonenList}
+        <button
+          className="scroll-arrow2"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img
+            src={Left}
+            className="right-arrow"
+            alt="right" 
+          ></img>
+        </button>
+      </div>
+
+      <div className="mb-1 ml-2 mt-3">
+        <span className="movie-type text-white">Sci-fi Movies</span>
+      </div>
+      <div className="contents d-flex flex-row mb-2" id="contents3">
+        <button
+          className="scroll-arrow"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: -window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img src={Left} className="left-arrow" alt="left"  ></img>
+        </button> 
+        {sciFiList}
+        <button
+          className="scroll-arrow2"
+          onClick={() => {
+            document.getElementById("contents3").scrollBy({
+              left: window.innerWidth,
+              behavior: "smooth",
+            });
+          }}
+        >
+          <img
+            src={Left}
+            className="right-arrow"
+            alt="right" 
+          ></img>
+        </button>
+      </div>
+
     </div>
   );
 };

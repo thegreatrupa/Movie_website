@@ -75,13 +75,13 @@ const Profile = () => {
             {left ? (
               <div>
                 {
-                  empty_watchlist ? <div className="empty-text">No movie in watchlist</div> : <div>{<List/>}</div>
+                  empty_watchlist ? <div className="empty-text">No movie in watchlist</div> : <div>{watchlist}</div>
                 }
               </div>
             ) : (
               <div>
                 {
-                  empty_likes ? <div className="empty-text">Like movies to add to your list</div> : <div>{<List/>}</div>
+                  empty_likes ? <div className="empty-text">Like movies to add to your list</div> : <div>{likelist}</div>
                 }
               </div>
             ) } 

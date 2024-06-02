@@ -1,20 +1,28 @@
-const express = require("express");
-const mongoose = require("mongoose");
-let MongoClient = require('mongodb').MongoClient;
-var bodyParser = require('body-parser')
-const cors = require('cors');
+import dotenv from "dotenv";
+dotenv.config({path: './env'});
+
+import connectDB from "./db/db.js";
+
+import mongoose from "mongoose";
+import express from "express";
+import bodyParser from 'body-parser';
+import cors from 'cors';
+// const express = require("express");
+// const mongoose = require("mongoose");
+// let MongoClient = require('mongodb').MongoClient;
+// var bodyParser = require('body-parser')
+// const cors = require('cors'); 
 
 
 const app = express();
-//app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(cors());
-
-mongoose.connect("mongodb://0.0.0.0:27017/movie_website_authentication");
-// app.use(bodyParser.urlencoded({
-//   extended: true
-// }));
 app.use(bodyParser.json());
+
+connectDB();
+app.listen(8000, () => {
+  console.log("server is running ");
+});
 
 const UserSchema = mongoose.Schema({ 
   name : String,
@@ -26,6 +34,27 @@ const UserSchema = mongoose.Schema({
 
 const UserModel = mongoose.model("users", UserSchema);
 UserModel.createIndexes();
+
+const MoviesSchema = mongoose.Schema({ 
+  name : String,
+  poster: String,
+  overview: String,
+  genre: [String]
+});
+
+const MovieModel = mongoose.model("movies", MoviesSchema);
+MovieModel.createIndexes();
+
+app.get("/movies", (req, res) => { 
+  MovieModel.find()
+    .then(function (movies) {
+      console.log(movies)
+      res.send(movies) 
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+});
 
 
 // const UserSchema_data = mongoose.Schema({ 
@@ -194,7 +223,3 @@ app.post("/delete_like", async (req, resp) => {
 });
 
 
-
-app.listen(3001, () => {
-  console.log("server is running");
-});
